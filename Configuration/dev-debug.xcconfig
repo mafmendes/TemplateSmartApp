@@ -1,0 +1,17 @@
+//
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+//
+
+#include "./dev-base.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = com.you.app.id
+DEVELOPMENT_TEAM = 7Q4P97WLDL
+PROVISIONING_PROFILE_SPECIFIER = 7Q4P97WLDL/Smart App Debug Development Profile
+CODE_SIGN_IDENTITY = Apple Development
+
+//PROVISIONING_PROFILE[sdk=*]=161538159429335808109692414422077930422
+//CODE_SIGN_IDENTITY[sdk=*]=iPhone Distribution
+//CODE_SIGN_IDENTITY[sdk=*]=iPhone Developer
+//NOTIFICATION_SERVICE_PROVISIONING_PROFILE_SPECIFIER=XXXXXXXX/Dev - xx.yy.xx.prod.notificationservice
+//PROVISIONING_PROFILE[sdk=*]=D96971CA-FA3D-4A2D-89DB-B0F296893131

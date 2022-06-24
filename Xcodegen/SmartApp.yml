@@ -1,0 +1,411 @@
+name: SmartApp
+
+#
+# https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md
+#
+
+options:
+  bundleIdPrefix: com.you.app.id
+  xcodeVersion: '12.0.1'
+  deploymentTarget: '13.0'
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  findCarthageFrameworks: false
+  minimumXcodeGenVersion: '2.18.0'
+
+####################### PACKAGES #######################
+
+packages:
+
+# A Swift extension that adds toast notifications to the UIView object class.
+  Toast:
+    url: https://github.com/scalessec/Toast-Swift
+    revision: "0c9493eeacb102cc614da385cfaaf475379f4ab4"
+ 
+ # Use Nimble to express the expected outcomes of Swift or Objective-C expressions
+  Nimble:
+    url: https://github.com/Quick/Nimble
+    branch: main
+   
+# Swinject is a lightweight dependency injection framework for Swift.
+  Swinject:
+    url: https://github.com/Swinject/Swinject
+    branch: master
+
+  Reachability:
+    url: https://github.com/ashleymills/Reachability.swift
+    revision: "c01bbdf2d633cf049ae1ed1a68a2020a8bda32e2"
+  
+  Alamofire:
+    url: https://github.com/Alamofire/Alamofire.git
+    branch: master
+  
+  SDWebImage:
+    url: https://github.com/SDWebImage/SDWebImage.git
+    branch: master
+     
+####################### Documents #######################
+####################### Documents #######################
+####################### Documents #######################
+
+fileGroups:
+
+  - ../_Documents
+  - ../Configuration
+  - ../XcodeGen
+     
+####################### CONFIGS #######################
+####################### CONFIGS #######################
+####################### CONFIGS #######################
+
+configs:
+  QA Debug: debug
+  Dev Debug: debug
+  Production Debug: debug
+  Mock Debug: debug
+  QA Release: release
+  Dev Release: release
+  Production Release: release
+  Mock Release: release
+
+####################### INCLUDE #######################
+####################### INCLUDE #######################
+####################### INCLUDE #######################
+ 
+include:
+  # Templates
+  - _FrameworkTemplate.yml
+  - _UnitTestTemplate.yml
+  
+  # Scripts
+  - _SwiftLint.yml
+  - _Periphery.yml
+ # - _CopyFrameworks.yml
+
+####################### SETTINGS BASE #######################
+####################### SETTINGS BASE #######################
+####################### SETTINGS BASE #######################
+# Setting base are shared for all targets, but can be overriden on 
+# each target settings. Example: All target will follow the IPHONEOS_DEPLOYMENT_TARGET key,
+# but target can redefine that value and so overriden it
+settings:
+
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: 13.0
+    MARKETING_VERSION: 2.0
+    ENABLE_BITCODE: YES
+    SWIFT_VERSION: 5.3
+    CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
+
+
+####################### MAIN TARGET #######################
+####################### MAIN TARGET #######################
+####################### MAIN TARGET #######################
+
+targets:
+        
+  SmartApp:
+    type: application
+    platform: iOS
+    
+    # settings ########################
+    settings:
+      base:
+        #IPHONEOS_DEPLOYMENT_TARGET: 12.0
+        #MARKETING_VERSION: 1.0
+        OTHER_SWIFT_FLAGS: "-DSMART_SDK_ENABLED"
+        
+    # configFiles ########################
+          
+    configFiles:
+      Production Debug: ../Configuration/production-debug.xcconfig
+      Production Release: ../Configuration/production-release.xcconfig
+      QA Debug: ../Configuration/qa-debug.xcconfig
+      QA Release: ../Configuration/qa-release.xcconfig
+      Dev Debug: ../Configuration/dev-debug.xcconfig
+      Dev Release: ../Configuration/dev-release.xcconfig
+      Mock Debug: ../Configuration/mock-debug.xcconfig
+      Mock Release: ../Configuration/mock-release.xcconfig
+              
+    # scheme ########################
+ 
+    scheme:
+      testTargets:
+        - SmartAppTests
+      configVariants:
+        - Production
+        - QA
+        - Dev
+        - Mock
+        
+      commandLineArguments:
+        "-MyEnabledArg": true
+        "-MyDisabledArg": false
+      environmentVariables:
+        MY_ENV_VAR: VALUE
+        
+    # sources: ########################        
+    
+    sources:
+       - path: ../_SmartApp
+         type: group
+         excludes:
+           - "*.md"
+           - "*.png"
+    
+    # dependencies: ########################        
+    
+    dependencies:
+      - target: BaseUI
+      - target: AppCore
+      - target: Common
+      - target: Resources
+      - target: BaseDomain
+      - target: AppDomain
+      - target: Designables
+      - target: AppConstants
+      - target: DevTools
+        link: false
+      - target: WebAPICore
+      - target: WebAPIDomain
+
+      - package: Toast
+        product: Toast
+        link: false
+      - package: Swinject
+        product: Swinject
+        link: false
+      - package: Reachability
+        product: Reachability
+        link: false
+      - package: Alamofire
+        product: Alamofire
+        link: true
+      - package: SDWebImage
+        product: SDWebImage
+        link: true
+          
+
+## TESTING
+## TESTING
+## TESTING
+
+  SmartAppTests:
+    templates:
+      - UnitTest
+    sources:
+      - path: ../SmartAppTests
+    dependencies:
+      - sdk: XCTest.framework
+      
+      - target: SmartApp
+        link: true
+      - target: Common
+        link: false      
+      - target: BaseUI
+        link: false
+      - target: AppCore
+        link: false
+      - target: AppDomain
+        link: false
+      - target: DevTools
+        link: false
+      - target: WebAPICore
+        link: false
+      - target: WebAPIDomain
+        link: false
+        
+      - package: Nimble
+        product: Nimble
+        link: true
+           
+  SmartAppUITests:
+    templates:
+      - UnitTest
+    sources:
+      - path: ../SmartAppUITests
+    dependencies:
+      - sdk: XCTest.framework
+      - target: SmartApp
+        link: true
+      - target: BaseUI
+        link: false
+      - target: Common
+        link: false
+      - target: DevTools
+        link: false
+      - target: AppCore
+        link: false
+      - target: WebAPICore
+        link: false
+                      
+      - package: Nimble
+        product: Nimble
+        link: true
+      
+## BASE UI
+## BASE UI
+## BASE UI
+
+  BaseUI:
+    templates:
+    - Framework
+    sources:
+      - path: ../BaseUI
+    dependencies:
+      - target: BaseDomain
+      - target: DevTools
+      - target: Common
+      - target: AppConstants
+      
+## DESINABLES 
+## DESINABLES 
+## DESINABLES 
+
+  Designables:
+    templates:
+    - Framework
+    sources:
+      - path: ../Designables
+    dependencies:
+      - target: DevTools
+      - target: Common
+      - target: AppConstants
+      - target: Resources
+      - target: BaseUI
+      - target: AppDomain
+
+## APP CORE (Logic)
+## APP CORE (Logic)
+## APP CORE (Logic)
+
+  AppCore:
+    templates:
+    - Framework
+    sources:
+      - path: ../AppCore
+    dependencies:
+      - target: DevTools
+      - target: BaseDomain
+      - target: AppDomain
+      - target: WebAPICore
+      - target: WebAPIDomain
+      - target: Common
+      - target: Resources
+      
+      - package: Swinject
+        product: Swinject
+        link: true
+      - package: Reachability
+        product: Reachability
+        link: true
+
+# APP DOMAIN (Models and Protocols)
+# APP DOMAIN (Models and Protocols)
+# APP DOMAIN (Models and Protocols)
+
+  AppDomain:
+    templates:
+    - Framework
+    sources:
+      - path: ../AppDomain
+    dependencies:
+      - target: BaseDomain
+      - target: DevTools
+      - target: Common
+      - target: WebAPIDomain
+                                      
+  
+# BASE DOMAIN
+# BASE DOMAIN
+# BASE DOMAIN
+
+  BaseDomain:
+    templates:
+    - Framework
+    sources:
+      - path: ../BaseDomain
+    dependencies:
+      - target: DevTools
+      - target: Common
+      - target: AppConstants
+      
+# WEB API  (Core and Domain)
+# WEB API  (Core and Domain)
+# WEB API  (Core and Domain)
+       
+  WebAPICore:
+    templates:
+    - Framework
+    sources:
+      - path: ../WebAPICore
+    dependencies:
+      - target: DevTools
+      - target: Common
+      - target: AppDomain
+      - target: BaseDomain
+      - target: WebAPIDomain
+  
+  WebAPIDomain:
+    templates:
+    - Framework
+    sources:
+      - path: ../WebAPIDomain
+    dependencies:
+      - target: DevTools
+      - target: Common
+      - target: BaseDomain
+         
+# DEVTOOLS (Cant have app dependencies)
+# DEVTOOLS (Cant have app dependencies)
+# DEVTOOLS (Cant have app dependencies)
+
+  DevTools:
+    templates:
+    - Framework
+    sources:
+      - path: ../DevTools
+    dependencies:
+      - target: Common
+        link: false
+      - package: Toast
+        link: true
+
+## APP CONSTANTS (Cant have dependencies)
+## APP CONSTANTS (Cant have dependencies)
+## APP CONSTANTS (Cant have dependencies)
+
+  AppConstants:
+    templates:
+    - Framework
+    sources:
+      - path: ../AppConstants
+    dependencies:
+      - target: Common
+        link: false
+      
+# COMMON (Cant have app dependencies)
+# COMMON (Cant have app dependencies)
+# COMMON (Cant have app dependencies)
+
+  Common:
+    templates:
+    - Framework
+    sources:
+      - path: ../Common
+
+## RESOURCES (Cant have app dependencies)
+## RESOURCES (Cant have app dependencies)
+## RESOURCES (Cant have app dependencies)
+
+  Resources:
+    templates:
+    - Framework
+    sources:
+      - path: ../Resources  
+    dependencies:
+      - target: AppDomain
+      - target: Common     
+      - target: AppConstants
+      - target: DevTools
+      - target: BaseUI

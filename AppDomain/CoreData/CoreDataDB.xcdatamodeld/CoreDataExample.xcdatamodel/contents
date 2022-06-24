@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20G224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="KeyValueCoreDataEntety" representedClassName="KeyValueCoreDataEntety" syncable="YES" codeGenerationType="class">
+        <attribute name="expireDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="recordDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
+        <attribute name="valueType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="ZipCodeCoreDataEntety" representedClassName="ZipCodeCoreDataEntety" syncable="YES" codeGenerationType="class">
+        <attribute name="desigPostal" optional="YES" attributeType="String"/>
+        <attribute name="extCodPostal" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nomeLocalidade" optional="YES" attributeType="String"/>
+        <attribute name="numCodPostal" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="KeyValueCoreDataEntety" positionX="-54" positionY="279" width="128" height="104"/>
+        <element name="ZipCodeCoreDataEntety" positionX="-54" positionY="324" width="128" height="104"/>
+    </elements>
+</model>

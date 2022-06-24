@@ -1,0 +1,7 @@
+aggregateTargets:
+  Periphery:
+    buildScripts:
+       - script: |
+                 ${SRCROOT}/Scripts/periphery.sh
+         name: "Periphery"
+         shell: /bin/bash

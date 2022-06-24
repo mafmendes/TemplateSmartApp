@@ -1,0 +1,575 @@
+{
+  "include" : [
+    "_FrameworkTemplate.yml",
+    "_UnitTestTemplate.yml",
+    "_SwiftLint.yml",
+    "_Periphery.yml"
+  ],
+  "fileGroups" : [
+    "..\/_Documents",
+    "..\/Configuration",
+    "..\/XcodeGen"
+  ],
+  "options" : {
+    "groupSortPosition" : "top",
+    "minimumXcodeGenVersion" : "2.18.0",
+    "xcodeVersion" : "12.0.1",
+    "deploymentTarget" : "13.0",
+    "findCarthageFrameworks" : false,
+    "bundleIdPrefix" : "com.you.app.id",
+    "generateEmptyDirectories" : true
+  },
+  "configs" : {
+    "Dev Release" : "release",
+    "QA Release" : "release",
+    "Production Release" : "release",
+    "Mock Release" : "release",
+    "Production Debug" : "debug",
+    "QA Debug" : "debug",
+    "Dev Debug" : "debug",
+    "Mock Debug" : "debug"
+  },
+  "name" : "SmartApp",
+  "packages" : {
+    "SDWebImage" : {
+      "branch" : "master",
+      "url" : "https:\/\/github.com\/SDWebImage\/SDWebImage.git"
+    },
+    "Reachability" : {
+      "revision" : "c01bbdf2d633cf049ae1ed1a68a2020a8bda32e2",
+      "url" : "https:\/\/github.com\/ashleymills\/Reachability.swift"
+    },
+    "Alamofire" : {
+      "branch" : "master",
+      "url" : "https:\/\/github.com\/Alamofire\/Alamofire.git"
+    },
+    "Toast" : {
+      "url" : "https:\/\/github.com\/scalessec\/Toast-Swift",
+      "revision" : "0c9493eeacb102cc614da385cfaaf475379f4ab4"
+    },
+    "Swinject" : {
+      "branch" : "master",
+      "url" : "https:\/\/github.com\/Swinject\/Swinject"
+    },
+    "Nimble" : {
+      "url" : "https:\/\/github.com\/Quick\/Nimble",
+      "branch" : "main"
+    }
+  },
+  "settings" : {
+    "base" : {
+      "SWIFT_VERSION" : 5.2999999999999998,
+      "ENABLE_BITCODE" : true,
+      "IPHONEOS_DEPLOYMENT_TARGET" : 13,
+      "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true,
+      "MARKETING_VERSION" : 2
+    }
+  },
+  "aggregateTargets" : {
+    "SwiftLint" : {
+      "buildScripts" : [
+        {
+          "name" : "SwiftLint",
+          "script" : "${SRCROOT}\/Scripts\/swiftlint.sh\n",
+          "shell" : "\/bin\/bash"
+        }
+      ]
+    },
+    "Periphery" : {
+      "buildScripts" : [
+        {
+          "name" : "Periphery",
+          "shell" : "\/bin\/bash",
+          "script" : "${SRCROOT}\/Scripts\/periphery.sh\n"
+        }
+      ]
+    }
+  },
+  "targetTemplates" : {
+    "UnitTest" : {
+      "platform" : "iOS",
+      "settings" : "TEST_HOST = \"$(BUILT_PRODUCTS_DIR)\/Smart App.app\/Smart App\"",
+      "deploymentTarget" : "13.0",
+      "type" : "bundle.unit-test"
+    },
+    "Framework" : {
+      "deploymentTarget" : "13.0",
+      "settings" : {
+        "base" : {
+          "MARKETING_VERSION" : 1
+        }
+      },
+      "platform" : "iOS",
+      "type" : "framework"
+    }
+  },
+  "targets" : {
+    "Designables" : {
+      "dependencies" : [
+        {
+          "target" : "DevTools"
+        },
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "AppConstants"
+        },
+        {
+          "target" : "Resources"
+        },
+        {
+          "target" : "BaseUI"
+        },
+        {
+          "target" : "AppDomain"
+        }
+      ],
+      "templates" : [
+        "Framework"
+      ],
+      "sources" : [
+        {
+          "path" : "..\/Designables"
+        }
+      ]
+    },
+    "Common" : {
+      "sources" : [
+        {
+          "path" : "..\/Common"
+        }
+      ],
+      "templates" : [
+        "Framework"
+      ]
+    },
+    "WebAPIDomain" : {
+      "templates" : [
+        "Framework"
+      ],
+      "sources" : [
+        {
+          "path" : "..\/WebAPIDomain"
+        }
+      ],
+      "dependencies" : [
+        {
+          "target" : "DevTools"
+        },
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "BaseDomain"
+        }
+      ]
+    },
+    "BaseDomain" : {
+      "sources" : [
+        {
+          "path" : "..\/BaseDomain"
+        }
+      ],
+      "templates" : [
+        "Framework"
+      ],
+      "dependencies" : [
+        {
+          "target" : "DevTools"
+        },
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "AppConstants"
+        }
+      ]
+    },
+    "WebAPICore" : {
+      "dependencies" : [
+        {
+          "target" : "DevTools"
+        },
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "AppDomain"
+        },
+        {
+          "target" : "BaseDomain"
+        },
+        {
+          "target" : "WebAPIDomain"
+        }
+      ],
+      "sources" : [
+        {
+          "path" : "..\/WebAPICore"
+        }
+      ],
+      "templates" : [
+        "Framework"
+      ]
+    },
+    "SmartApp" : {
+      "settings" : {
+        "base" : {
+          "OTHER_SWIFT_FLAGS" : "-DSMART_SDK_ENABLED"
+        }
+      },
+      "platform" : "iOS",
+      "type" : "application",
+      "dependencies" : [
+        {
+          "target" : "BaseUI"
+        },
+        {
+          "target" : "AppCore"
+        },
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "Resources"
+        },
+        {
+          "target" : "BaseDomain"
+        },
+        {
+          "target" : "AppDomain"
+        },
+        {
+          "target" : "Designables"
+        },
+        {
+          "target" : "AppConstants"
+        },
+        {
+          "link" : false,
+          "target" : "DevTools"
+        },
+        {
+          "target" : "WebAPICore"
+        },
+        {
+          "target" : "WebAPIDomain"
+        },
+        {
+          "link" : false,
+          "package" : "Toast",
+          "product" : "Toast"
+        },
+        {
+          "package" : "Swinject",
+          "link" : false,
+          "product" : "Swinject"
+        },
+        {
+          "link" : false,
+          "product" : "Reachability",
+          "package" : "Reachability"
+        },
+        {
+          "product" : "Alamofire",
+          "link" : true,
+          "package" : "Alamofire"
+        },
+        {
+          "package" : "SDWebImage",
+          "link" : true,
+          "product" : "SDWebImage"
+        }
+      ],
+      "sources" : [
+        {
+          "type" : "group",
+          "path" : "..\/_SmartApp",
+          "excludes" : [
+            "*.md",
+            "*.png"
+          ]
+        }
+      ],
+      "scheme" : {
+        "commandLineArguments" : {
+          "-MyEnabledArg" : true,
+          "-MyDisabledArg" : false
+        },
+        "environmentVariables" : {
+          "MY_ENV_VAR" : "VALUE"
+        },
+        "configVariants" : [
+          "Production",
+          "QA",
+          "Dev",
+          "Mock"
+        ],
+        "testTargets" : [
+          "SmartAppTests"
+        ]
+      },
+      "configFiles" : {
+        "Production Release" : "..\/Configuration\/production-release.xcconfig",
+        "Dev Release" : "..\/Configuration\/dev-release.xcconfig",
+        "QA Release" : "..\/Configuration\/qa-release.xcconfig",
+        "QA Debug" : "..\/Configuration\/qa-debug.xcconfig",
+        "Mock Release" : "..\/Configuration\/mock-release.xcconfig",
+        "Dev Debug" : "..\/Configuration\/dev-debug.xcconfig",
+        "Production Debug" : "..\/Configuration\/production-debug.xcconfig",
+        "Mock Debug" : "..\/Configuration\/mock-debug.xcconfig"
+      }
+    },
+    "DevTools" : {
+      "sources" : [
+        {
+          "path" : "..\/DevTools"
+        }
+      ],
+      "dependencies" : [
+        {
+          "link" : false,
+          "target" : "Common"
+        },
+        {
+          "package" : "Toast",
+          "link" : true
+        }
+      ],
+      "templates" : [
+        "Framework"
+      ]
+    },
+    "Resources" : {
+      "templates" : [
+        "Framework"
+      ],
+      "sources" : [
+        {
+          "path" : "..\/Resources"
+        }
+      ],
+      "dependencies" : [
+        {
+          "target" : "AppDomain"
+        },
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "AppConstants"
+        },
+        {
+          "target" : "DevTools"
+        },
+        {
+          "target" : "BaseUI"
+        }
+      ]
+    },
+    "BaseUI" : {
+      "templates" : [
+        "Framework"
+      ],
+      "sources" : [
+        {
+          "path" : "..\/BaseUI"
+        }
+      ],
+      "dependencies" : [
+        {
+          "target" : "BaseDomain"
+        },
+        {
+          "target" : "DevTools"
+        },
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "AppConstants"
+        }
+      ]
+    },
+    "SmartAppTests" : {
+      "sources" : [
+        {
+          "path" : "..\/SmartAppTests"
+        }
+      ],
+      "dependencies" : [
+        {
+          "sdk" : "XCTest.framework"
+        },
+        {
+          "target" : "SmartApp",
+          "link" : true
+        },
+        {
+          "link" : false,
+          "target" : "Common"
+        },
+        {
+          "link" : false,
+          "target" : "BaseUI"
+        },
+        {
+          "target" : "AppCore",
+          "link" : false
+        },
+        {
+          "link" : false,
+          "target" : "AppDomain"
+        },
+        {
+          "target" : "DevTools",
+          "link" : false
+        },
+        {
+          "target" : "WebAPICore",
+          "link" : false
+        },
+        {
+          "link" : false,
+          "target" : "WebAPIDomain"
+        },
+        {
+          "package" : "Nimble",
+          "product" : "Nimble",
+          "link" : true
+        }
+      ],
+      "templates" : [
+        "UnitTest"
+      ]
+    },
+    "AppDomain" : {
+      "templates" : [
+        "Framework"
+      ],
+      "dependencies" : [
+        {
+          "target" : "BaseDomain"
+        },
+        {
+          "target" : "DevTools"
+        },
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "WebAPIDomain"
+        }
+      ],
+      "sources" : [
+        {
+          "path" : "..\/AppDomain"
+        }
+      ]
+    },
+    "AppCore" : {
+      "dependencies" : [
+        {
+          "target" : "DevTools"
+        },
+        {
+          "target" : "BaseDomain"
+        },
+        {
+          "target" : "AppDomain"
+        },
+        {
+          "target" : "WebAPICore"
+        },
+        {
+          "target" : "WebAPIDomain"
+        },
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "Resources"
+        },
+        {
+          "product" : "Swinject",
+          "package" : "Swinject",
+          "link" : true
+        },
+        {
+          "product" : "Reachability",
+          "package" : "Reachability",
+          "link" : true
+        }
+      ],
+      "templates" : [
+        "Framework"
+      ],
+      "sources" : [
+        {
+          "path" : "..\/AppCore"
+        }
+      ]
+    },
+    "AppConstants" : {
+      "sources" : [
+        {
+          "path" : "..\/AppConstants"
+        }
+      ],
+      "templates" : [
+        "Framework"
+      ],
+      "dependencies" : [
+        {
+          "target" : "Common",
+          "link" : false
+        }
+      ]
+    },
+    "SmartAppUITests" : {
+      "dependencies" : [
+        {
+          "sdk" : "XCTest.framework"
+        },
+        {
+          "link" : true,
+          "target" : "SmartApp"
+        },
+        {
+          "link" : false,
+          "target" : "BaseUI"
+        },
+        {
+          "link" : false,
+          "target" : "Common"
+        },
+        {
+          "target" : "DevTools",
+          "link" : false
+        },
+        {
+          "link" : false,
+          "target" : "AppCore"
+        },
+        {
+          "target" : "WebAPICore",
+          "link" : false
+        },
+        {
+          "product" : "Nimble",
+          "package" : "Nimble",
+          "link" : true
+        }
+      ],
+      "sources" : [
+        {
+          "path" : "..\/SmartAppUITests"
+        }
+      ],
+      "templates" : [
+        "UnitTest"
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+//
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+//
+
+#include "./qa-base.xcconfig"
+
+DEVELOPMENT_TEAM = N9C9UAVR87
+PROVISIONING_PROFILE_SPECIFIER = N9C9UAVR87/Smart App Enterprise
+CODE_SIGN_IDENTITY = iPhone Distribution

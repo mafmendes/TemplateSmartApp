@@ -1,0 +1,9 @@
+targetTemplates:
+  UnitTest:
+    platform: iOS
+    deploymentTarget: '13.0'
+    type: bundle.unit-test
+    settings:
+    #  FRAMEWORK_SEARCH_PATHS: $(inherited) $(SRCROOT)/Carthage/Build/iOS
+      TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart App.app/Smart App"
+

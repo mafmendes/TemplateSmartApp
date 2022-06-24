@@ -1,0 +1,55 @@
+/* Localized versions of Info.plist keys */
+
+/* ENGLISH - ALPHABHETIC ORDER START */
+/* ENGLISH - ALPHABHETIC ORDER START */
+/* ENGLISH - ALPHABHETIC ORDER START */
+
+"generic.alert" = "Alert";
+"generic.back" = "Back";
+"generic.cancel" = "Cancel";
+"generic.delete" = "Delete";
+"generic.details" = "Details";
+"generic.dismiss" = "dismiss";
+"generic.description" = "Description";
+"generic.invalidEmail" = "Invalid Email";
+"generic.invalidCredentials" = "Invalid credenctials";
+"generic.login" = "login";
+"generic.no" = "No";
+"generic.noRecords" = "No records";
+"generic.noInternet" = "No internet";
+"generic.ok" = "OK";
+"generic.pleaseTryAgainLater" = "Please try again later";
+"generic.pleaseWait" = "Please wait";
+"generic.password" = "Password";
+"generic.search" = "Search";
+"generic.select" = "Select";
+"generic.success" = "Sucess";
+"generic.save" = "Save";
+"generic.userName" = "Username";
+"generic.yes" = "Yes";
+"generic.loading1" = "Loading";
+"generic.loading2" = "Loading...";
+
+//
+// Toolbar
+//
+
+"control" = "Control"; // Toolbar
+"climate" = "Climate";
+"charging" = "Charging";
+"account" = "Account";
+
+//
+// Tab 1 : Acount / Quick actions
+//
+
+"key_share" = "Key share";
+"lock" = "Lock";
+"locked" = "Locked";
+"unlocked" = "Unlocked";
+"doors_locked" = "Doors Locked";
+"doors_unlocked" = "Doors Unlocked";
+"trunk" = "Trunk";
+"trunk_locked" = "Trunk Locked";
+"trunk_unlocked" = "Trunk Unlocked";
+"loading" = "Loading";

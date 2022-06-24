@@ -1,0 +1,20 @@
+//
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+//
+
+#include "./base.xcconfig"
+
+BUILD_USER = $(USER)
+PRODUCT_NAME = Smart.Dev
+
+
+TARGET_ENVIRONMENT = dev
+ENABLE_BITCODE = NO
+
+//
+// Custom Keys
+//
+
+SMARTSDK_APP_ID = SmartAPPIDxxxxxxxx
+SMARTSDK_APP_SECRET = 71234567899

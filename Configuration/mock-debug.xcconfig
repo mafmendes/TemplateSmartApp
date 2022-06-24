@@ -1,0 +1,11 @@
+//
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+//
+
+#include "./mock-base.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = com.you.app.id.debug
+DEVELOPMENT_TEAM = 7Q4P97WLDL
+PROVISIONING_PROFILE_SPECIFIER = 7Q4P97WLDL/Smart App Debug Development Profile
+CODE_SIGN_IDENTITY = Apple Development
