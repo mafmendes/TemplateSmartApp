@@ -62,7 +62,7 @@ class CollectionViewCell: UICollectionViewCell {
             else if let index = (model.range(of: "@._V1")?.lowerBound) {
               // comments above is the same for the following code
               let beforeEqualsTo = String(model.prefix(upTo: index))
-              let newString = "@@.jpg"
+              let newString = "@.jpg"
                 var newModel = beforeEqualsTo
                 newModel.append(newString)
                 guard let url = URL(string: newModel) else {
