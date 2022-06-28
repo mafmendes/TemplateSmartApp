@@ -274,13 +274,9 @@ extension V.MovieScreenDetailView {
 }
 extension V.MovieScreenDetailView {
     func configureInformation( fullTitle: String, title: String, imageView: String, description: String, imDbRating: String, metacriticRating: String, actors: String) {
-        print("OLA")
-        print(fullTitle)
-        print(title)
-        print(imageView)
         if imageView.contains("m.media-amazon") || imageView.contains("imdb-api.com") {
         // So after this 2 caracthers
-        if let _ = (imageView.range(of: "@")?.lowerBound) {
+        if (imageView.range(of: "@")?.lowerBound) != nil {
             if let index = (imageView.range(of: "UX")?.lowerBound) {
           let beforeEqualsTo = String(imageView.prefix(upTo: index))
           // replace it with this new string, which will give the image a high quality
@@ -291,8 +287,7 @@ extension V.MovieScreenDetailView {
                 return
             }
                 posterImageView.sd_setImage(with: url, placeholderImage: nil)
-            }
-            else if let index = (imageView.range(of: "@@")?.lowerBound) {
+            } else if let index = (imageView.range(of: "@@")?.lowerBound) {
               // comments above is the same for the following code
               let beforeEqualsTo = String(imageView.prefix(upTo: index))
               let newString = "@@.jpg"
@@ -301,11 +296,8 @@ extension V.MovieScreenDetailView {
                 guard let url = URL(string: newModel) else {
                     return
                 }
-                print("oiri2")
-                print(url)
                 posterImageView.sd_setImage(with: url, placeholderImage: nil)
-            }
-            else if let index = (imageView.range(of: "@._V1")?.lowerBound) {
+            } else if let index = (imageView.range(of: "@._V1")?.lowerBound) {
               // comments above is the same for the following code
               let beforeEqualsTo = String(imageView.prefix(upTo: index))
               let newString = "@.jpg"
@@ -314,11 +306,8 @@ extension V.MovieScreenDetailView {
                 guard let url = URL(string: newModel) else {
                     return
                 }
-                print("oiri3")
-                print(url)
                 posterImageView.sd_setImage(with: url, placeholderImage: nil)
-            }
-            else if let index = (imageView.range(of: "._V1")?.lowerBound) {
+            } else if let index = (imageView.range(of: "._V1")?.lowerBound) {
               // comments above is the same for the following code
               let beforeEqualsTo = String(imageView.prefix(upTo: index))
               let newString = ".@@.jpg"
@@ -327,8 +316,6 @@ extension V.MovieScreenDetailView {
                 guard let url = URL(string: newModel) else {
                     return
                 }
-                print("oiri")
-                print(url)
                 posterImageView.sd_setImage(with: url, placeholderImage: nil)
             }
         } else if let index = (imageView.range(of: "._V1")?.lowerBound) {
@@ -344,25 +331,10 @@ extension V.MovieScreenDetailView {
             posterImageView.sd_setImage(with: url, placeholderImage: nil)
         }
     } else {
-//        if let index = (imageView.range(of: "V1_Ratio0")?.lowerBound) {
-//          let beforeEqualsTo = String(imageView.prefix(upTo: index))
-//          // replace it with this new string, which will give the image a high quality
-//          let newString = "SY1000_CR0,0,675,1000_AL_.jpg"
-//            var newModel = beforeEqualsTo
-//            newModel.append(newString)
-//            guard let url = URL(string: newModel) else {
-//                return
-//            }
-//            print("ola")
-//            print(url)
-//                posterImageView.sd_setImage(with: url, placeholderImage: nil)
-//        }
-        //else {
             guard let url = URL(string: imageView) else {
                 return
             }
             posterImageView.sd_setImage(with: url, placeholderImage: nil)
-        //}
         
     }
     titleLabel.text = fullTitle
